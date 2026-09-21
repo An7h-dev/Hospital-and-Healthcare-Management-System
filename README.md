@@ -92,12 +92,14 @@ Then open <http://localhost:8080> in your browser.
 
 Work is divided by files to keep ownership clear and avoid merge conflicts.
 
-| Member | Responsibility | Files | Branch |
-|--------|----------------|-------|--------|
-| Member 1 | Design System & Accessibility | `css/style.css`, `css/theme-dark.css`, `css/theme-contrast.css`, `accessibility.html` | `feature/design-system` |
-| Member 2 | Dashboard & Patients | `index.html`, `patients.html`, `add-patient.html`, `patient-profile.html` | `feature/patients` |
-| Member 3 | Scheduling & Directory | `doctors.html`, `departments.html`, `appointments.html`, `login.html` | `feature/scheduling` |
-| Member 4 | Clinical & Command Center | `prescriptions.html`, `billing.html`, `triage.html`, `beds.html` | `feature/clinical` |
+| Member | Part | Responsibility | Code files |
+|--------|------|----------------|------------|
+| **Ansh Pratap Singh** | Part 1 | Foundations, Command Center, Triage & Bed Occupancy | `login.html`, `index.html`, `triage.html`, `beds.html`, `css/style.css`, `css/theme-dark.css`, `css/theme-contrast.css` |
+| **Ankit Parashar** | Part 2 | Patients | `patients.html`, `add-patient.html`, `patient-profile.html` |
+| **Aniket Singh** | Part 3 | Doctors, Appointments & Departments | `doctors.html`, `appointments.html`, `departments.html` |
+| **Akhil Tripathi** | Part 4 | Prescriptions, Billing & Accessibility | `prescriptions.html`, `billing.html`, `accessibility.html` |
+
+> The three stylesheets under `css/` are shared by every page and are maintained by Part 1 (Ansh Pratap Singh). All other files are owned solely by the member listed above.
 
 ## Git Workflow
 
