@@ -1,0 +1,63 @@
+/* ==========================================================================
+   MediCare+ — High-Contrast theme (data-theme="contrast")
+   Maximises contrast (>= 7:1), removes reliance on subtle borders.
+   ========================================================================== */
+[data-theme="contrast"] {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #f0f0f0;
+  --border: #000000;
+  --text: #000000;
+  --text-muted: #1a1a1a;
+
+  --brand: #0040b0;
+  --brand-strong: #00308a;
+  --accent: #00695c;
+
+  --ok: #005c1f;
+  --ok-bg: #c8ffd9;
+  --warn: #5c3a00;
+  --warn-bg: #ffe8b3;
+  --danger: #a00000;
+  --danger-bg: #ffd2d2;
+  --info: #00308a;
+  --info-bg: #cfe0ff;
+
+  --sidebar-bg: #000000;
+  --sidebar-text: #ffffff;
+  --sidebar-active-bg: #0040b0;
+  --sidebar-active-text: #ffffff;
+
+  --triage-red: #a00000;
+  --triage-red-bg: #ffd2d2;
+  --triage-amber: #5c3a00;
+  --triage-amber-bg: #ffe8b3;
+  --triage-yellow: #4a3a00;
+  --triage-yellow-bg: #fff3b3;
+  --triage-green: #005c1f;
+  --triage-green-bg: #c8ffd9;
+
+  --shadow: none;
+  --focus-ring: #000000;
+}
+
+[data-theme="contrast"] .card,
+[data-theme="contrast"] .table td,
+[data-theme="contrast"] .table thead th,
+[data-theme="contrast"] .topbar,
+[data-theme="contrast"] .bed,
+[data-theme="contrast"] .triage-card {
+  border-width: 2px;
+}
+
+[data-theme="contrast"] .auth-wrap {
+  background: #000000;
+}
+
+[data-theme="contrast"] .badge-status {
+  border: 1px solid currentColor;
+}
+
+[data-theme="contrast"] a {
+  text-decoration: underline;
+}
