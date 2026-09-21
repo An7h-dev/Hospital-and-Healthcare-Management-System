@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Command Center — MediCare+</title>
+  <meta name="description" content="MediCare+ command center dashboard: hospital statistics, token queue, bed occupancy and recent appointments.">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/theme-dark.css" rel="stylesheet">
+  <link href="css/theme-contrast.css" rel="stylesheet">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <div class="app">
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <a class="sidebar-brand" href="index.html">
+        <i class="bi bi-heart-pulse-fill" aria-hidden="true"></i>
+        <span>MediCare+</span>
+      </a>
+      <nav class="sidebar-nav">
+        <span class="sidebar-section-label">Overview</span>
+        <a class="nav-link active" href="index.html" aria-current="page"><i class="bi bi-grid-1x2-fill" aria-hidden="true"></i> Command Center</a>
+        <a class="nav-link" href="triage.html"><i class="bi bi-activity" aria-hidden="true"></i> Triage Board</a>
+        <a class="nav-link" href="beds.html"><i class="bi bi-hospital" aria-hidden="true"></i> Bed Occupancy</a>
+        <span class="sidebar-section-label">Management</span>
+        <a class="nav-link" href="patients.html"><i class="bi bi-people-fill" aria-hidden="true"></i> Patients</a>
+        <a class="nav-link" href="doctors.html"><i class="bi bi-person-badge-fill" aria-hidden="true"></i> Doctors</a>
+        <a class="nav-link" href="appointments.html"><i class="bi bi-calendar2-check-fill" aria-hidden="true"></i> Appointments</a>
+        <a class="nav-link" href="departments.html"><i class="bi bi-building-fill" aria-hidden="true"></i> Departments</a>
+        <span class="sidebar-section-label">Clinical</span>
+        <a class="nav-link" href="prescriptions.html"><i class="bi bi-capsule" aria-hidden="true"></i> Prescriptions</a>
+        <a class="nav-link" href="billing.html"><i class="bi bi-receipt" aria-hidden="true"></i> Billing</a>
+        <span class="sidebar-section-label">About</span>
+        <a class="nav-link" href="accessibility.html"><i class="bi bi-universal-access" aria-hidden="true"></i> Accessibility</a>
+      </nav>
+      <div class="sidebar-footer">
+        <i class="bi bi-shield-lock" aria-hidden="true"></i> MediCare+ v1.0<br>
+        WCAG 2.1 AA compliant
+      </div>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <button class="icon-btn d-lg-none" id="menuBtn" aria-label="Toggle navigation" aria-expanded="false" aria-controls="sidebar" onclick="toggleSidebar()">
+          <i class="bi bi-list" aria-hidden="true"></i>
+        </button>
+        <form class="search d-none d-md-block" role="search" aria-label="Global search">
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-search" aria-hidden="true"></i></span>
+            <input class="form-control" type="search" placeholder="Search patients, doctors..." aria-label="Search">
+          </div>
+        </form>
+        <div class="topbar-actions">
+          <div class="d-none d-md-flex align-items-center gap-1 me-1" role="group" aria-label="Text size">
+            <button class="icon-btn" style="font-size:0.75rem" type="button" onclick="setFont(15)" aria-label="Smaller text" title="Smaller text">A-</button>
+            <button class="icon-btn" style="font-size:0.9rem" type="button" onclick="setFont(16)" aria-label="Default text size" title="Default text size">A</button>
+            <button class="icon-btn" style="font-size:1.05rem" type="button" onclick="setFont(18)" aria-label="Larger text" title="Larger text">A+</button>
+          </div>
+          <div class="dropdown">
+            <button class="icon-btn" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Theme options" title="Change theme">
+              <i class="bi bi-circle-half" aria-hidden="true"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><button class="dropdown-item" type="button" onclick="setTheme('light')"><i class="bi bi-sun me-2" aria-hidden="true"></i>Light</button></li>
+              <li><button class="dropdown-item" type="button" onclick="setTheme('dark')"><i class="bi bi-moon me-2" aria-hidden="true"></i>Dark</button></li>
+              <li><button class="dropdown-item" type="button" onclick="setTheme('contrast')"><i class="bi bi-eye me-2" aria-hidden="true"></i>High contrast</button></li>
+            </ul>
+          </div>
+          <button class="icon-btn" aria-label="Notifications" title="Notifications">
+            <i class="bi bi-bell" aria-hidden="true"></i>
+          </button>
+          <div class="user-chip ms-1">
+            <span class="avatar" aria-hidden="true">AD</span>
+            <span class="d-none d-sm-block">
+              <span class="name d-block">Dr. A. Desai</span>
+              <span class="role d-block">Administrator</span>
+            </span>
+          </div>
+        </div>
+      </header>
+
+      <main id="main-content" class="content" tabindex="-1">
+        <div class="page-head">
+          <div>
+            <h1>Command Center</h1>
+            <p class="subtitle">Live hospital overview — Tuesday, 1 September 2026</p>
+          </div>
+          <a class="btn btn-primary" href="add-patient.html"><i class="bi bi-person-plus" aria-hidden="true"></i> Admit patient</a>
+        </div>
+
+        <!-- Stat cards -->
+        <div class="row g-3 mb-3">
+          <div class="col-6 col-xl-3">
+            <div class="card stat-card">
+              <span class="icon icon-blue"><i class="bi bi-people-fill" aria-hidden="true"></i></span>
+              <div>
+                <div class="value">1,284</div>
+                <div class="label">Total patients</div>
+                <span class="delta text-success">+12 today</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-xl-3">
+            <div class="card stat-card">
+              <span class="icon icon-teal"><i class="bi bi-calendar2-check-fill" aria-hidden="true"></i></span>
+              <div>
+                <div class="value">86</div>
+                <div class="label">Appointments</div>
+                <span class="delta text-success">+9 today</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-xl-3">
+            <div class="card stat-card">
+              <span class="icon icon-amber"><i class="bi bi-hospital" aria-hidden="true"></i></span>
+              <div>
+                <div class="value">72%</div>
+                <div class="label">Bed occupancy</div>
+                <span class="delta text-muted-2">216 / 300 beds</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-xl-3">
+            <div class="card stat-card">
+              <span class="icon icon-red"><i class="bi bi-cash-stack" aria-hidden="true"></i></span>
+              <div>
+                <div class="value">&#8377;4.2L</div>
+                <div class="label">Revenue (month)</div>
+                <span class="delta text-success">+8.4%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-3">
+          <!-- Now serving -->
+          <div class="col-12 col-lg-8">
+            <div class="card mb-3">
+              <div class="card-header d-flex align-items-center justify-content-between">
+                <span><i class="bi bi-clock-history me-1" aria-hidden="true"></i> Recent appointments</span>
+                <a href="appointments.html" class="small">View all</a>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                  <thead>
+                    <tr>
+                      <th scope="col">Patient</th>
+                      <th scope="col">Doctor</th>
+                      <th scope="col">Time</th>
+                      <th scope="col">Department</th>
+                      <th scope="col">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><a href="patient-profile.html">Ravi Sharma</a></td>
+                      <td>Dr. Meera Iyer</td>
+                      <td>09:30 AM</td>
+                      <td>Cardiology</td>
+                      <td><span class="badge-status ok"><i class="bi bi-check-circle" aria-hidden="true"></i> Confirmed</span></td>
+                    </tr>
+                    <tr>
+                      <td><a href="patient-profile.html">Anita Rao</a></td>
+                      <td>Dr. K. Menon</td>
+                      <td>09:45 AM</td>
+                      <td>Neurology</td>
+                      <td><span class="badge-status info"><i class="bi bi-hourglass-split" aria-hidden="true"></i> Waiting</span></td>
+                    </tr>
+                    <tr>
+                      <td><a href="patient-profile.html">Joseph D&rsquo;Souza</a></td>
+                      <td>Dr. S. Nair</td>
+                      <td>10:15 AM</td>
+                      <td>Orthopedics</td>
+                      <td><span class="badge-status warn"><i class="bi bi-clock" aria-hidden="true"></i> Pending</span></td>
+                    </tr>
+                    <tr>
+                      <td><a href="patient-profile.html">Priya Verma</a></td>
+                      <td>Dr. Meera Iyer</td>
+                      <td>10:30 AM</td>
+                      <td>Cardiology</td>
+                      <td><span class="badge-status danger"><i class="bi bi-x-circle" aria-hidden="true"></i> Cancelled</span></td>
+                    </tr>
+                    <tr>
+                      <td><a href="patient-profile.html">Imran Khan</a></td>
+                      <td>Dr. R. Pillai</td>
+                      <td>11:00 AM</td>
+                      <td>Pediatrics</td>
+                      <td><span class="badge-status ok"><i class="bi bi-check-circle" aria-hidden="true"></i> Confirmed</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Triage summary -->
+            <div class="card">
+              <div class="card-header d-flex align-items-center justify-content-between">
+                <span><i class="bi bi-activity me-1" aria-hidden="true"></i> Emergency triage summary</span>
+                <a href="triage.html" class="small">Open triage board</a>
+              </div>
+              <div class="card-body">
+                <div class="row g-2 text-center">
+                  <div class="col-6 col-md-3">
+                    <div class="rounded-3 p-2" style="background:var(--triage-red-bg);color:var(--triage-red);">
+                      <div class="fw-bold fs-4">2</div><div class="small">Immediate</div>
+                    </div>
+                  </div>
+                  <div class="col-6 col-md-3">
+                    <div class="rounded-3 p-2" style="background:var(--triage-amber-bg);color:var(--triage-amber);">
+                      <div class="fw-bold fs-4">5</div><div class="small">Very urgent</div>
+                    </div>
+                  </div>
+                  <div class="col-6 col-md-3">
+                    <div class="rounded-3 p-2" style="background:var(--triage-yellow-bg);color:var(--triage-yellow);">
+                      <div class="fw-bold fs-4">8</div><div class="small">Urgent</div>
+                    </div>
+                  </div>
+                  <div class="col-6 col-md-3">
+                    <div class="rounded-3 p-2" style="background:var(--triage-green-bg);color:var(--triage-green);">
+                      <div class="fw-bold fs-4">14</div><div class="small">Standard</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right column -->
+          <div class="col-12 col-lg-4">
+            <div class="card mb-3">
+              <div class="card-header"><i class="bi bi-ticket-perforated me-1" aria-hidden="true"></i> Now serving (Front desk)</div>
+              <div class="card-body text-center">
+                <div class="display-4 fw-bold text-primary" aria-hidden="true">A-041</div>
+                <p class="text-muted-2 mb-1">Token for Dr. Meera Iyer &middot; Cardiology</p>
+                <div class="progress" style="height:10px;" role="progressbar" aria-label="Queue progress" aria-valuenow="41" aria-valuemin="0" aria-valuemax="100">
+                  <div class="progress-bar" style="width:41%"></div>
+                </div>
+                <div class="small text-muted-2 mt-2">41 of 58 tokens called today</div>
+              </div>
+            </div>
+
+            <div class="card mb-3">
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-hospital me-1" aria-hidden="true"></i> Bed occupancy</span>
+                <a href="beds.html" class="small">Details</a>
+              </div>
+              <div class="card-body">
+                <div class="d-flex justify-content-between small mb-1">
+                  <span>Occupancy</span><strong>72%</strong>
+                </div>
+                <div class="occupancy-meter mb-3"><div style="width:72%"></div></div>
+                <div class="d-flex gap-2 flex-wrap">
+                  <span class="badge-status ok"><i class="bi bi-circle-fill" aria-hidden="true"></i> 84 free</span>
+                  <span class="badge-status danger"><i class="bi bi-circle-fill" aria-hidden="true"></i> 216 occupied</span>
+                  <span class="badge-status info"><i class="bi bi-circle-fill" aria-hidden="true"></i> 12 cleaning</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header"><i class="bi bi-capsule me-1" aria-hidden="true"></i> Low-stock medicines</div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Paracetamol 500mg
+                  <span class="badge-status danger"><i class="bi bi-exclamation-triangle" aria-hidden="true"></i> 12 left</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Amoxicillin 250mg
+                  <span class="badge-status warn"><i class="bi bi-exclamation-triangle" aria-hidden="true"></i> 30 left</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Insulin Glargine
+                  <span class="badge-status danger"><i class="bi bi-exclamation-triangle" aria-hidden="true"></i> 5 left</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    (function () {
+      var t = localStorage.getItem('mc-theme');
+      if (t && t !== 'light') document.documentElement.setAttribute('data-theme', t);
+      var f = localStorage.getItem('mc-fs');
+      if (f) document.documentElement.style.fontSize = f + 'px';
+
+      window.setTheme = function (t) {
+        if (t === 'light') document.documentElement.removeAttribute('data-theme');
+        else document.documentElement.setAttribute('data-theme', t);
+        localStorage.setItem('mc-theme', t);
+      };
+      window.setFont = function (p) {
+        document.documentElement.style.fontSize = p + 'px';
+        localStorage.setItem('mc-fs', p);
+      };
+      window.toggleSidebar = function () {
+        var s = document.getElementById('sidebar');
+        var b = document.getElementById('menuBtn');
+        var open = s.classList.toggle('show');
+        if (b) b.setAttribute('aria-expanded', open ? 'true' : 'false');
+      };
+    })();
+  </script>
+</body>
+</html>
