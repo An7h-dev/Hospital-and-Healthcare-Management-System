@@ -1,0 +1,665 @@
+/* ==========================================================================
+   MediCare+ — Accessibility-First Hospital & Healthcare Management System
+   style.css — design tokens, layout, components, print & accessibility helpers
+   Built with HTML5 + CSS3 + Bootstrap 5
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Design tokens (Light theme — default)
+   -------------------------------------------------------------------------- */
+:root {
+  /* Brand */
+  --brand: #0d6efd;
+  --brand-strong: #0a58ca;
+  --accent: #0f9e8f;
+
+  /* Surfaces & text */
+  --bg: #f3f5fa;
+  --surface: #ffffff;
+  --surface-2: #eef2f9;
+  --border: #d9e0ec;
+  --text: #1c2433;
+  --text-muted: #55617a;
+
+  /* Status (each is also paired with icon + text in markup — never colour-only) */
+  --ok: #157347;
+  --ok-bg: #d1e7dd;
+  --warn: #9a5b00;
+  --warn-bg: #fff0cf;
+  --danger: #b02a37;
+  --danger-bg: #f8d7da;
+  --info: #0a4f8a;
+  --info-bg: #cfe2ff;
+
+  /* Sidebar */
+  --sidebar-bg: #101b2e;
+  --sidebar-text: #b9c4d6;
+  --sidebar-active-bg: var(--brand);
+  --sidebar-active-text: #ffffff;
+
+  /* Triage urgency scale */
+  --triage-red: #b02a37;
+  --triage-red-bg: #f8d7da;
+  --triage-amber: #b76a00;
+  --triage-amber-bg: #ffe9c4;
+  --triage-yellow: #7a5b00;
+  --triage-yellow-bg: #fff3bf;
+  --triage-green: #157347;
+  --triage-green-bg: #d1e7dd;
+
+  /* Misc */
+  --focus-ring: #0d6efd;
+  --shadow: 0 1px 3px rgba(16, 27, 46, 0.08), 0 1px 2px rgba(16, 27, 46, 0.06);
+  --radius: 0.75rem;
+  --sidebar-w: 260px;
+  --topbar-h: 64px;
+  --font: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* --------------------------------------------------------------------------
+   2. Base
+   -------------------------------------------------------------------------- */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text);
+  font-weight: 600;
+}
+
+a {
+  color: var(--brand);
+}
+a:hover {
+  color: var(--brand-strong);
+}
+
+/* Visible, consistent keyboard focus — required for WCAG AA */
+:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Skip link for keyboard / screen-reader users */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 2000;
+  background: var(--brand);
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border-radius: 0 0 0.5rem 0;
+  text-decoration: none;
+  font-weight: 600;
+}
+.skip-link:focus {
+  left: 0;
+  color: #fff;
+}
+
+/* Reduced-motion users */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3. App shell: sidebar + main column
+   -------------------------------------------------------------------------- */
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: var(--sidebar-w);
+  background: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 1040;
+  overflow-y: auto;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1.1rem 1.25rem;
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 700;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  text-decoration: none;
+}
+.sidebar-brand i {
+  font-size: 1.5rem;
+  color: #7db4ff;
+}
+.sidebar-brand:hover {
+  color: #fff;
+}
+
+.sidebar-nav {
+  padding: 1rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.sidebar-nav .nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--sidebar-text);
+  padding: 0.6rem 0.85rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+.sidebar-nav .nav-link i {
+  font-size: 1.05rem;
+  width: 1.4rem;
+  text-align: center;
+}
+.sidebar-nav .nav-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+.sidebar-nav .nav-link.active {
+  background: var(--sidebar-active-bg);
+  color: var(--sidebar-active-text);
+}
+
+.sidebar-section-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6b7a94;
+  padding: 0.9rem 0.85rem 0.3rem;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding: 1rem 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.8rem;
+  color: #8a97ab;
+}
+
+/* Main column */
+.main {
+  flex: 1;
+  margin-left: var(--sidebar-w);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  height: var(--topbar-h);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1.25rem;
+}
+
+.topbar .search {
+  flex: 1;
+  max-width: 420px;
+}
+.topbar .search .form-control {
+  background: var(--surface-2);
+  border-color: transparent;
+}
+.topbar .search .form-control:focus {
+  background: var(--surface);
+  border-color: var(--brand);
+}
+
+.topbar-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+}
+.icon-btn:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.user-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.user-chip .avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--brand);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+.user-chip .name {
+  font-size: 0.9rem;
+  color: var(--text);
+  font-weight: 600;
+}
+.user-chip .role {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  line-height: 1;
+}
+
+.content {
+  padding: 1.5rem 1.5rem 3rem;
+  flex: 1;
+}
+
+.page-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+.page-head h1 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+.page-head .subtitle {
+  color: var(--text-muted);
+  margin: 0.15rem 0 0;
+  font-size: 0.9rem;
+}
+
+/* --------------------------------------------------------------------------
+   4. Cards & panels
+   -------------------------------------------------------------------------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.card-header {
+  background: transparent;
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+  padding: 0.9rem 1.15rem;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.1rem 1.15rem;
+}
+.stat-card .icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 0.7rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+.stat-card .value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+.stat-card .label {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+.stat-card .delta {
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.icon-blue   { background: var(--info-bg);   color: var(--info); }
+.icon-teal   { background: var(--ok-bg);     color: var(--ok); }
+.icon-amber  { background: var(--warn-bg);   color: var(--warn); }
+.icon-red    { background: var(--danger-bg); color: var(--danger); }
+
+/* --------------------------------------------------------------------------
+   5. Tables
+   -------------------------------------------------------------------------- */
+.table {
+  margin-bottom: 0;
+  --bs-table-bg: transparent;
+  --bs-table-color: var(--text);
+}
+.table thead th {
+  background: var(--surface-2);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+}
+.table td {
+  vertical-align: middle;
+  border-color: var(--border);
+}
+.table tbody tr:hover {
+  background: var(--surface-2);
+}
+
+/* --------------------------------------------------------------------------
+   6. Badges — colour is ALWAYS paired with an icon + text (accessibility)
+   -------------------------------------------------------------------------- */
+.badge-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 600;
+  font-size: 0.76rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+}
+.badge-status.ok     { background: var(--ok-bg);     color: var(--ok); }
+.badge-status.warn   { background: var(--warn-bg);   color: var(--warn); }
+.badge-status.danger { background: var(--danger-bg); color: var(--danger); }
+.badge-status.info   { background: var(--info-bg);   color: var(--info); }
+
+/* --------------------------------------------------------------------------
+   7. Doctor cards
+   -------------------------------------------------------------------------- */
+.doctor-card {
+  text-align: center;
+  padding: 1.25rem 1rem;
+}
+.doctor-card .avatar-lg {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  margin: 0 auto 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+}
+.doctor-card .name {
+  font-weight: 600;
+  margin-bottom: 0.1rem;
+}
+.doctor-card .spec {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+.rating {
+  color: #b45309;
+  font-size: 0.85rem;
+}
+
+/* --------------------------------------------------------------------------
+   8. Triage board
+   -------------------------------------------------------------------------- */
+.triage-card {
+  border-left: 5px solid;
+  border-radius: var(--radius);
+  padding: 0.9rem 1rem;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.triage-card.red    { border-left-color: var(--triage-red);    background: var(--triage-red-bg); }
+.triage-card.amber  { border-left-color: var(--triage-amber);  background: var(--triage-amber-bg); }
+.triage-card.yellow { border-left-color: var(--triage-yellow); background: var(--triage-yellow-bg); }
+.triage-card.green  { border-left-color: var(--triage-green);  background: var(--triage-green-bg); }
+.triage-card .level {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.triage-card.red    .level { color: var(--triage-red); }
+.triage-card.amber  .level { color: var(--triage-amber); }
+.triage-card.yellow .level { color: var(--triage-yellow); }
+.triage-card.green  .level { color: var(--triage-green); }
+.triage-card .name {
+  font-weight: 600;
+}
+.triage-card .meta {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   9. Bed board
+   -------------------------------------------------------------------------- */
+.bed {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.65rem 0.7rem;
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.bed .bed-no {
+  font-weight: 700;
+}
+.bed.free      { border-left: 4px solid var(--ok); }
+.bed.occupied  { border-left: 4px solid var(--danger); }
+.bed.cleaning  { border-left: 4px solid var(--info); }
+.bed.reserved  { border-left: 4px solid var(--warn); }
+
+.occupancy-meter {
+  height: 10px;
+  background: var(--surface-2);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.occupancy-meter > div {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 999px;
+}
+
+/* --------------------------------------------------------------------------
+   10. Timeline (patient health record)
+   -------------------------------------------------------------------------- */
+.timeline {
+  position: relative;
+  padding-left: 1.75rem;
+  border-left: 2px solid var(--border);
+  margin-left: 0.5rem;
+}
+.timeline-item {
+  position: relative;
+  padding-bottom: 1.4rem;
+}
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -2.15rem;
+  top: 0.2rem;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--brand);
+  border: 3px solid var(--surface);
+  box-shadow: 0 0 0 1px var(--brand);
+}
+.timeline-item .when {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+.timeline-item .what {
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   11. Forms & login
+   -------------------------------------------------------------------------- */
+.form-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.auth-wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #0f1b2d 0%, #0d6efd 130%);
+}
+.auth-card {
+  width: 100%;
+  max-width: 430px;
+  background: var(--surface);
+  border-radius: 1rem;
+  box-shadow: 0 12px 40px rgba(16, 27, 46, 0.35);
+  padding: 2rem 2rem 1.6rem;
+}
+
+.required::after {
+  content: " *";
+  color: var(--danger);
+}
+
+.form-text.help {
+  color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   12. Utilities
+   -------------------------------------------------------------------------- */
+.text-muted-2 { color: var(--text-muted) !important; }
+.pill-count {
+  background: var(--surface-2);
+  color: var(--text-muted);
+  border-radius: 999px;
+  padding: 0.1rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   13. Responsive: collapse sidebar on small screens
+   -------------------------------------------------------------------------- */
+@media (max-width: 991.98px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+  }
+  .sidebar.show {
+    transform: translateX(0);
+  }
+  .main {
+    margin-left: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   14. Print styles — shared hospital header/footer on clinical documents
+   -------------------------------------------------------------------------- */
+.print-header, .print-footer {
+  display: none;
+}
+
+@media print {
+  body { background: #fff; }
+  /* Print only the .print-area block (invoice / prescription), hide the rest */
+  body * { visibility: hidden; }
+  .print-area, .print-area * { visibility: visible; }
+  .print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+  .print-area .card {
+    border: none !important;
+    box-shadow: none !important;
+  }
+  .print-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #000;
+    padding-bottom: 0.6rem;
+    margin-bottom: 1.2rem;
+  }
+  .print-header .h-name {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #000;
+  }
+  .print-header .h-meta {
+    font-size: 0.8rem;
+    color: #000;
+  }
+  .print-footer {
+    display: block;
+    border-top: 1px solid #999;
+    margin-top: 2rem;
+    padding-top: 0.6rem;
+    font-size: 0.75rem;
+    color: #000;
+  }
+  .doc-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+}

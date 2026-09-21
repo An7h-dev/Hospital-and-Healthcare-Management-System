@@ -1,0 +1,51 @@
+/* ==========================================================================
+   MediCare+ — Dark theme (data-theme="dark")
+   Loaded AFTER style.css to override the design tokens.
+   ========================================================================== */
+[data-theme="dark"] {
+  --bg: #0f1520;
+  --surface: #1a2230;
+  --surface-2: #222c3d;
+  --border: #2c3748;
+  --text: #e7edf5;
+  --text-muted: #a5b1c4;
+
+  --ok: #5dd39a;
+  --ok-bg: #14301f;
+  --warn: #ffc65c;
+  --warn-bg: #3a2c10;
+  --danger: #ff8f9a;
+  --danger-bg: #3a171c;
+  --info: #8ab8ff;
+  --info-bg: #12263f;
+
+  --sidebar-bg: #0b111c;
+  --sidebar-text: #a9b6cb;
+
+  --triage-red: #ff8f9a;
+  --triage-red-bg: #3a171c;
+  --triage-amber: #ffbe55;
+  --triage-amber-bg: #3a2c10;
+  --triage-yellow: #ffd75c;
+  --triage-yellow-bg: #332b08;
+  --triage-green: #5dd39a;
+  --triage-green-bg: #14301f;
+
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .auth-wrap {
+  background: linear-gradient(135deg, #0b111c 0%, #1a2230 100%);
+}
+
+[data-theme="dark"] .table thead th {
+  background: var(--surface-2);
+}
+
+[data-theme="dark"] .rating {
+  color: #ffc65c;
+}
+
+[data-theme="dark"] .doctor-card .avatar-lg {
+  color: #0b111c;
+}
